@@ -31,4 +31,7 @@ http://itinfo.main.jp/tan/?p=116
 	Host:.www.google.co.jp
 	Connection:.Keep-Alive
 	User-Agent:.Apache-HttpClient/UNAVAILABLE.(java.1.4)
+■OpenSSL
+openssl s_server -CAfile chain.crt -cert server.crt -key server.key -www
+http://qiita.com/ngyuki/items/d0e7f3c162c1f8446298
 
