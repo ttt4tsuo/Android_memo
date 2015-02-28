@@ -15,6 +15,12 @@ http://www.sage-p.com/process/process.htm
 ビジネスルールの概要
 https://www.ogis-ri.co.jp/otc/swec/process/am-res/am/artifacts/businessRule.html
 
+シーケンス図、ステートマシン；astah
+
+■URL
+https://sites.google.com/site/devcollaboration/codesearch
+
+
 ■テスト
 mockito
 http://y-anz-m.blogspot.jp/search/label/mockito
