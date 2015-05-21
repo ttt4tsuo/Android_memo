@@ -42,3 +42,8 @@ http://itinfo.main.jp/tan/?p=116
 openssl s_server -CAfile chain.crt -cert server.crt -key server.key -www
 http://qiita.com/ngyuki/items/d0e7f3c162c1f8446298
 
+▪viewを一部消去
+https://akira-watson.com/android/inflate.html
+http://ichitcltk.hustle.ne.jp/gudon2/index.php?pageType=file&id=Android059_ViewTree
+http://andbrissyu.blogspot.jp/2012/12/blog-post.html
+
