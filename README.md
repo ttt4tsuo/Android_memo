@@ -47,3 +47,41 @@ https://akira-watson.com/android/inflate.html
 http://ichitcltk.hustle.ne.jp/gudon2/index.php?pageType=file&id=Android059_ViewTree
 http://andbrissyu.blogspot.jp/2012/12/blog-post.html
 
+・絵文字
+■emoji4unicode ( EmojiSources.txt)
+https://code.google.com/p/emoji4unicode/source/browse/trunk/data/emoji4unicode.xml
+https://code.google.com/p/emoji4unicode/source/browse/trunk/generated/EmojiSources.txt
+http://developers.linecorp.com/blog/?p=30
+http://unicode.org/~scherer/emoji4unicode/snapshot/full.html
+http://trialgoods.com/emoji/?career=i&page=all
+http://qiita.com/aMasatoYui/items/0d4ff33df5f67e23e67c
+http://www.fileformat.info/info/unicode/char/2600/index.htm
+
+x-docomo-shift_jis-2007
+x-kddi-shift_jis-2007
+x-softbank-shift_jis-2007
+
+■docomo-shift_jis-2007.ucm
+https://code.google.com/p/android-source-browsing/source/browse/data/mappings/docomo-shift_jis-2007.ucm?repo=platform--external--icu4c&name=android-4.0.4_r1.1&r=ea1f1813c8b13a850b13f256aeb5152bb0942e81
+String strstr = "\u2600";
+String bstr = "";
+try {
+   byte[] strstrbyte = strstr.getBytes("UTF-8");
+   for(byte b:strstrbyte)
+      bstr = bstr + Integer.toHexString(b & 0xff);
+   } catch (UnsupportedEncodingException e) {
+   }
+Log.d("myapp",bstr);
+String strstr = "";
+try {
+   strstr = new String("\u2600".getBytes("x-docomo-shift_jis-2012"), "Shift-jis");
+} catch (UnsupportedEncodingException e1) {
+}
+String bstr = "";
+try {
+   byte[] strstrbyte = strstr.getBytes("Shift-jis");
+   for(byte b:strstrbyte)
+      bstr = bstr + Integer.toHexString(b & 0xff);
+   } catch (UnsupportedEncodingException e) {
+   }
+Log.d("myapp",bstr);
