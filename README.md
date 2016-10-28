@@ -1,4 +1,4 @@
-■Java
+Java
 正規表現
 String str = "Orange is 100yen, Banana is 180yen.";
 String regex = "yen";
