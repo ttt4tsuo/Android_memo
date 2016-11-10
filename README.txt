@@ -90,3 +90,5 @@ http://qiita.com/alzybaad/items/23201e45e081d1c8c86f
 http://yuyakaido.hatenablog.com/entry/2014/02/16/230947
 http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 http://qiita.com/nein37/items/32613e9acd9558566c5e
+Android Open Source Project - Issue Tracker
+	https://code.google.com/p/android/issues/list
