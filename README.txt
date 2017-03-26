@@ -92,3 +92,11 @@ http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 http://qiita.com/nein37/items/32613e9acd9558566c5e
 Android Open Source Project - Issue Tracker
 	https://code.google.com/p/android/issues/list
+
+Git
+git reset --hard HEAD
+git clean -fd src assets res
+git reset --soft HEAD^
+git reset --hard ORIG_HEAD
+git cherry-pick -n 221984d3472296ac22c85efef154bXxxxxxxxxxxxxxxxx
+git branch master2 origin/master2
