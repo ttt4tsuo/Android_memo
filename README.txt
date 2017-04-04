@@ -100,3 +100,5 @@ git reset --soft HEAD^
 git reset --hard ORIG_HEAD
 git cherry-pick -n 221984d3472296ac22c85efef154bXxxxxxxxxxxxxxxxx
 git branch master2 origin/master2
+
+http://qiita.com/Yuki_312/items/b9af7d09559054ecabb5
