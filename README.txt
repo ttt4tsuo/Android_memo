@@ -102,3 +102,18 @@ git cherry-pick -n 221984d3472296ac22c85efef154bXxxxxxxxxxxxxxxxx
 git branch master2 origin/master2
 
 http://qiita.com/Yuki_312/items/b9af7d09559054ecabb5
+
+Dialog dialog = new Dialog(this);
+// タイトル非表示
+dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+// フルスクリーン
+dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+dialog.setContentView(R.layout.alert_dialog);
+// 背景を透明にする
+dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+dialog.show();
+
+ヒント: カスタム ダイアログが必要な場合は、Dialog API を使う代わりに、Activity をダイアログとして表示できます。 アクティビティを作成し、<activity> マニフェスト要素でそのテーマを Theme.Holo.Dialog に設定します。
+<activity android:theme="@android:style/Theme.Holo.Dialog" >
+これだけです。これで、アクティビティは全画面でなく、ダイアログ ウィンドウに表示されるようになります。
+
