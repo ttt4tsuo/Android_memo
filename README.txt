@@ -101,6 +101,21 @@ git reset --hard ORIG_HEAD
 git cherry-pick -n 221984d3472296ac22c85efef154bXxxxxxxxxxxxxxxxx
 git branch master2 origin/master2
 
+git clone https://github.com/ttt4tsuo/Android_memo.git
+
+git branch issue1
+git checkout issue1
+git push origin BN
+
+git push origin master:test
+ローカルのmasterブランチをリモートのtestブランチにpush
+
+
+fetch, pull, merge, rebase
+
+git pull
+fetch + mergeコマンドと動作、結果は同じです。
+
 http://qiita.com/Yuki_312/items/b9af7d09559054ecabb5
 
 Dialog dialog = new Dialog(this);
