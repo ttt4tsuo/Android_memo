@@ -1,0 +1,241 @@
+## 単一始点最短絡
+
+- 始点を固定
+- 全ての点への最短路を求める(終点が固定された問題でも同じ計算量になる)
+
+ベルマンフォード(負の経路の検出)
+
+    無限ループ
+      全辺をループ
+        コストの更新、更新が0であれば無限ループ終了
+
+code
+
+    struct edge{
+      int from,to,cost;
+    };
+    int V,E;//ここは問題固有
+    edge es[402];//ここは問題固有
+
+    int d[402];
+    void shortestPath(int s){
+      for(int i=0;i<V;i++){
+        d[i]=INT_MAX_VALUE;
+      }
+      d[s]=0;
+      while(true){
+        bool update=false;
+        for(int i=0;i<E;i++){
+          edge e=es[i];
+          if(d[e.from]!=INT_MAX_VALUE && d[e.to]>d[e.from]+e.cost){
+            d[e.to]=d[e.from]+e.cost;
+            update=true;
+          }
+        }
+        if(!update){
+          break;
+        }
+      }
+    }
+
+ダイクストラ(負の辺は不可)
+
+    無限ループ
+      現時点で使用されていない最小コストの頂点を探す
+        探した頂点を使用済にして、接続されている頂点のコストを更新、
+        全て使用済になれば無限ループ終了
+
+code
+
+    struct edge{
+      int to;
+      int cost;
+    };
+    typedef pair<int,int> P;//first:最短距離、second:頂点番号
+    vector<edge>G[100];//G[各頂点番号]
+    int d[100];
+
+    void dijkstra(int s,int V){//V:頂点数
+      priority_queue<P,vector<P>,greater<P>> que;
+      fill(d,d+V+1,INT_MAX_VALUE);
+      d[s]=0;
+      que.push(P(0,s));
+
+      while(!que.empty()){
+        P p=que.top();
+        que.pop();
+        int v=p.second;
+        if(d[v]<p.first){
+            continue;
+        }
+        for(int i=0;i<G[v].size();i++){
+            edge e=G[v][i];
+            if(d[e.to]>d[v]+e.cost){
+                d[e.to]=d[v]+e.cost;
+                que.push(P(d[e.to],e.to));
+            }
+        }
+      }
+    }
+
+    //使い方
+    edge e;
+    e.to=tmp2;
+    e.cost=tmp3;
+    G[tmp1].push_back(e);
+    //V=N;
+    dijkstra(1);
+
+
+## 全点対最短絡
+
+- すべての2点間の最短路
+
+ワーシャル・フロイド(DPで求める)
+
+    頂点0〜kを使うi,j間の最短路をd[k+1][i][j]
+    k=-1の時はi,j間(直連結)の距離
+    d[k+1][i][j]=min(d[k][i][j],d[k][i][k+1]+d[k+1][k][j])
+      kを通らない場合とkを通る場合
+    この3重ループ
+
+キューに頂点を入れて幅優先
+
+## 最小全域木
+
+プリム
+
+    無限ループ
+      最小全域木確定済みの部分木をXとし、コストはXと各頂点を結ぶ辺の内最小のものとする。cost[n]で表す(nは頂点番号)
+        現時点でXに含まれていない頂点で辺のコストが最小となる頂 点を探す
+        探した辺(頂点)を使用済にして、接続されている頂点のコストを更新、
+        全て使用済になれば無限ループ終了
+クラスカル
+
+    辺をコストの小さい順に並べる
+    閉路ができなければ辺を追加する
+
+code
+
+		//union-find
+		int ppar[200000];
+		int rrank[200000];
+
+		void init(int n){
+		    for(int i=0;i<n;i++){
+		        ppar[i]=i;
+		        rrank[i]=0;
+		    }
+		}
+
+		int find(int x){
+		    if(ppar[x]==x){
+		        return x;
+		    }else{
+		        return ppar[x]=find(ppar[x]);
+		    }
+		}
+
+		void unite(int x,int y){
+		    x=find(x);
+		    y=find(y);
+		    if(x==y){
+		        return;
+		    }
+		    if(rrank[x]<rrank[y]){
+		        ppar[x]=y;
+		    }else{
+		        ppar[y]=x;
+		        if(rrank[x]==rrank[y]){
+		            rrank[x]++;
+		        }
+		    }
+		}
+		bool same(int x,int y){
+		    return find(x)==find(y);
+		}
+
+		//kruskal
+		struct edge{
+		    int u;
+		    int v;
+		    int cost;
+		};
+
+		bool comp(edge& e1,edge& e2){
+		    return e1.cost < e2.cost;
+		}
+
+		edge es[200000];
+
+		long long kruskal(int V,int E){//V:頂点数,E:辺数
+		    sort(es,es+E,comp);
+		    init(V);
+		    long long res = 0;
+		    for(int i=0;i<E;i++){
+		        edge e = es[i];
+		        if(!same(e.u,e.v)){
+		            unite(e.u,e.v);
+		            res+=e.cost;
+		        }
+		    }
+		    return res;
+		}
+
+## 2色彩色
+
+    vector<int>G[500];
+    int V;
+    int color[500];
+
+
+    bool dfs(int v, int c){
+      color[v]=c;
+      for(int i=0;i<G[v].size();i++){
+        if(color[G[v][i]]==c)return false;//2色彩
+        if(color[G[v][i]]==0 && !dfs(G[v][i],1))return false;
+        }
+        return true;
+    }
+----
+    vector<int>G[100001];
+    int V;
+    XX color[100001];
+    bool used[100001];//dfs必須
+
+    void dfs(int v, int c){
+        if(used[v]){
+            return;
+        }
+        used[v]=true;
+        color[v].x=1;
+        for(int i=0;i<G[v].size();i++){
+            if(!used[G[v][i]]){
+                dfs(G[v][i],c);
+                color[v].x+=color[G[v][i]].x;
+            }
+        }
+    }
+----
+    int cost[100001];
+    int K;
+
+    void bfs(){
+      deque<int> deq;
+      deq.push_back(1);
+      cost[1]=0;
+
+      while(!deq.empty()){
+        int v=deq.front();
+        deq.pop_front();
+
+        if(cost[(v*10)%K]>cost[v]){
+            cost[(v*10)%K]=cost[v];
+            deq.push_front((v*10)%K);
+        }
+        if(cost[(v+1)%K]>cost[v]+1){
+            cost[(v+1)%K]=cost[v]+1;
+            deq.push_back((v+1)%K);
+        }
+      }
+    }
