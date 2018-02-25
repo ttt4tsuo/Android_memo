@@ -1,0 +1,193 @@
+## 平衡2分探索木
+
+    //https://www.slideshare.net/iwiwi/2-12188757
+    //キー(val)の2分探索木
+    //優先度(pri)の2分ヒープ(各々のノードはそのノードの子よりも大きいか等しくなる)
+    struct node_t{
+      ll val;//値
+      node_t *ch[2];//左右ポインタ
+      int pri;//優先度
+      int cnt;//部分木のサイズ
+      ll sum;//部分木の値の和
+
+      node_t(ll v,double p):val(v),pri(p),cnt(1),sum(1){
+        ch[0]=ch[1]=NULL;
+      }
+    };
+    int count(node_t *t){
+      return !t ? 0:t->cnt;
+    }
+    ll sum(node_t *t){
+      return !t ? 0:t->sum;
+    }
+    node_t *update(node_t *t){
+      t->cnt=count(t->ch[0])+count(t->ch[1])+1;
+      t->sum=sum(t->ch[0])+sum(t->ch[1])+t->val;
+      return t;
+    }
+    node_t *rotate(node_t *t,int b){//b==0 or 1
+      node_t *s=t->ch[1-b];//子(p)を保存
+      t->ch[1-b]=s->ch[b]; //bを親(q)の左に付ける
+      s->ch[b]=t;          //子(p)の右に親を付ける
+      update(t);
+      update(s);
+      return s;            //子を親にする
+    }
+    //     q
+    //    / \
+    //   p   c
+    //  / \
+    // a   b
+    //これを下に回転
+    //     p
+    //    / \
+    //   a   q
+    //      / \
+    //     b   c
+
+    //tが根となっている木のk番目に値val,優先度priのノード挿入
+    node_t *insert(node_t *t,int k,ll val,double pri){
+      if(!t){
+        return new node_t(val,pri);
+      }
+      int c=count(t->ch[0]),b=(k>c);//k番目なので左部分木のサイズより大きければ右に置く
+      t->ch[b]=insert(t->ch[b],k-(b ? (c+1):0),val,pri);//番手は左だと変わらないが、右だと(左部分木サイズ+1)分引く
+      update(t);
+      if(t->pri > t->ch[b]->pri){
+        t=rotate(t,1-b);
+      }
+      return t;
+    }
+    node_t *merge(node_t *l,node_t *r){
+      if(!l || !r){
+        return !l ? r:l;
+      }
+      if(l->pri > r->pri){
+        l->ch[1]=merge(l->ch[1],r);
+        return update(l);
+      }else{
+        r->ch[0]=merge(l,r->ch[0]);
+        return update(r);
+      }
+    }
+    pair<node_t*,node_t*> split(node_t *t,int k){//[0,k),[k,n)
+      if(!t){
+        node_t* ret=NULL;
+        return make_pair(ret,ret);
+      }
+      if(k<=count(t->ch[0])){
+        pair<node_t*,node_t*>s=split(t->ch[0],k);
+        t->ch[0]=s.second;
+        return make_pair(s.first,update(t));
+      }else{
+        pair<node_t*,node_t*>s=split(t->ch[1],k-count(t->ch[0])-1);
+        t->ch[1]=s.first;
+        return make_pair(update(t),s.second);
+      }
+    }
+
+### その2
+
+    //https://www.slideshare.net/iwiwi/2-12188757
+    //キー(val)の2分探索木
+    //優先度(pri)の2分ヒープ(各々のノードはそのノードの子よりも大きいか等しくなる)
+    struct node_t{
+      ll val;//値
+      node_t *ch[2];//左右ポインタ
+      int pri;//優先度(ランダムな数値)
+      int cnt;//部分木のサイズ
+      ll sum;//部分木の値の和
+
+      node_t(ll v,double p):val(v),pri(p),cnt(1),sum(1){
+        ch[0]=ch[1]=NULL;
+      }
+    };
+    int count(node_t *t){
+      return !t ? 0:t->cnt;
+    }
+    ll sum(node_t *t){
+      return !t ? 0:t->sum;
+    }
+    node_t *update(node_t *t){
+      t->cnt=count(t->ch[0])+count(t->ch[1])+1;
+      t->sum=sum(t->ch[0])+sum(t->ch[1])+t->val;
+      return t;
+    }
+    node_t *rotate(node_t *t,int b){//b==0 or 1
+      node_t *s=t->ch[1-b];//子(p)を保存
+      t->ch[1-b]=s->ch[b]; //bを親(q)の左に付ける
+      s->ch[b]=t;          //子(p)の右に親を付ける
+      update(t);
+      update(s);
+      return s;            //子を親にする
+    }
+    //     q
+    //    / \
+    //   p   c
+    //  / \
+    // a   b
+    //これを下に回転
+    //     p
+    //    / \
+    //   a   q
+    //      / \
+    //     b   c
+
+    //tが根となっている木に値val,優先度priのノード挿入
+    node_t *insert(node_t *t,ll val,int pri){
+      if(!t){
+        return new node_t(val,pri);
+      }
+
+      int b=(val > t->val);
+      t->ch[b]=insert(t->ch[b],val,pri);
+      update(t);
+      if(t->pri > t->ch[b]->pri){
+        t=rotate(t,1-b);
+      }
+      return t;
+    }
+    node_t *merge(node_t *l,node_t *r){
+      if(!l || !r){
+        return !l ? r:l;
+      }
+      if(l->pri > r->pri){
+        l->ch[1]=merge(l->ch[1],r);
+        return update(l);
+      }else{
+        r->ch[0]=merge(l,r->ch[0]);
+        return update(r);
+      }
+    }
+    pair<node_t*,node_t*> split(node_t *t,int k){//[0,k),[k,n)
+      if(!t){
+        node_t* ret=NULL;
+        return make_pair(ret,ret);
+      }
+      if(k<=count(t->ch[0])){
+        pair<node_t*,node_t*>s=split(t->ch[0],k);
+        t->ch[0]=s.second;
+        return make_pair(s.first,update(t));
+      }else{
+        pair<node_t*,node_t*>s=split(t->ch[1],k-count(t->ch[0])-1);
+        t->ch[1]=s.first;
+        return make_pair(update(t),s.second);
+      }
+    }
+    node_t *t=NULL;
+
+
+    //使い方
+    //木の作成
+    ll tmp2;
+    cin >> tmp2;
+    std::random_device rnd;
+    int r=rnd();
+    t=insert(t,tmp2,r);
+
+    //K番目の削除方法
+    //注意：splitすると、update()がかかるのでtの内容が変わる。
+    pair<node_t*,node_t*>p1=split(t,K);
+    pair<node_t*,node_t*>p2=split(p1.first,K-1);
+    cout << p2.second->val << endl;
+    t=merge(p2.first,p1.second);

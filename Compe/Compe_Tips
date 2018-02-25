@@ -1,0 +1,149 @@
+## コード片
+
+文字変換(intからstringへ)
+
+    int i
+    v.s='A'+i;
+
+文字変換(stringからintへ)
+
+    int a=*S.substr(i,1).c_str()-'0';
+    S.substr(0,1).c_str()-'a';
+
+文字コード
+
+    for(char c='A';c<='Z';c++){
+    }
+
+イテレータ
+
+    auto itr = v.begin();
+
+    auto it=lower_bound(r.begin(),r.end(),t[i]);
+    sort(Apart,Apart+(it-r.begin()));
+
+イテレータ2
+
+    for(int k=0;k<4;k++){
+      if(c[i][k]==tmp2){
+        c[i].erase(c[i].begin()+k);
+      }
+    }
+
+stringからdoubleへ
+
+    stringstream ss;
+    double pi;
+    ss << "3.14";
+    ss >> pi;
+
+stringからintへ
+
+    int n = atoi(str.c_str());
+    int b = atoi(S.substr(i+1,1).c_str());
+
+doubleからstringへ
+
+    ss << 123 << "NUMBER";
+    ss.str();
+
+char*からstringへ
+
+    string str;
+    char chars[];
+    str=chars;
+
+intからchar*へ
+
+    sprintf(tmp, "%d", N);
+    //asciiコードからascii文字へ
+    string(1,'a'+i)
+    char chars[1];
+    sprintf(chars,"%c",'a'+i);
+
+stringstream
+
+    ss.str(""); // バッファをクリアする。
+    ss.clear(stringstream::goodbit);
+
+vector
+
+    vector<int>a(n);
+    for(int& i:a){
+      cin >> i;
+    }
+
+ランダム
+
+    std::random_device rnd;
+
+base64
+
+    for(long long value=minn;value<=maxx;value++){
+        std::string str(std::bitset<64>(value).to_string<char, std::char_traits<char>, std::allocator<char> >());
+
+入出力(スプリット)
+
+    char split;
+    ifs >> p >> split >> q;
+
+入出力(ファイル入力)
+
+    long M,C,W;
+    std::ifstream ifs( "a.txt" );//スペースでセパレートされる
+    ifs >> M >> C >> W;
+
+入出力(桁数制御)
+
+    printf("%.0f",ans);
+
+K文字の全組みわわせ生成
+
+    int K=0;
+
+    void f(int a,string str){
+      if(a==K+1){
+        cout << str << endl;//ここで処理を行う
+        return;
+      }
+      int no=0;
+      for(int i=0;i<26;i++){
+        char chars[1];
+        no=i;
+        sprintf(chars,"%c",'a'+i);
+        f(a+1,str+chars);
+        i=no;
+      }
+    }
+
+
+マクロ
+
+    INT_MAX
+    LONG_LONG_MAX
+
+配列
+
+    大きすぎる配列はグローバルに置く
+    a[i] = {l, r, c};
+
+限界値
+
+    char size: 8
+    char max: 127
+    char min: -128
+    int max: 2147483647   -> INT_MAX
+    int min: -2147483648   -> INT_MIN
+    long max: 2147483647   -> LONG_MAX
+    long min: -2147483648
+    long long max: 9223372036854775807   -> LONG_LONG_MAX
+    long long min: -9223372036854775808
+    singed char max: 127
+    signed char min: -128
+    short max: 32767
+    short min: -32768
+    unsigned char max: 255
+    unsigned int max: 4294967295
+    unsigned long max: 4294967295
+    unsigned short max: 65535
+    unsigned long long max: 18446744073709551615

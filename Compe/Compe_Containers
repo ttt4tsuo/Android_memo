@@ -1,0 +1,187 @@
+## 辞書 / map(key,value)
+
+挿入
+
+    map<string,string> dictword;
+    dictword["first"]="1st";
+
+    //複合タイプの挿入
+    map<string,pair<int,int>> dictword;
+    int tmpmin=0;
+    int tmpmin2=1;
+    dictword["1st"]=make_pair(tmpmin2,tmpmin);
+
+~~dictword.insert(map<string,string>::value_type("first","1st"));~~
+~~dictword.insert(map<string,pair<int,int>>
+      ::value_type(sendword[i],make_pair(tmpmin2-1,tmpmin-1)));~~
+
+参照
+
+    dictword["first"]="1st";
+    string num = dictword["first"];
+    dictword.find("first");//キーの検索。なければdictword.end()を返す。
+    dictword.erase(イテレータ);//消去はイテレータが必要
+
+参照
+
+    map<int,int> diags[2000];
+    for(int i=0;i<N;i++){
+      diags[i].clear();
+    }
+    map<int,int>::iterator it;
+    it=diags[i].begin();
+    while(it != diags[i].end()) {
+
+      it++;
+    }
+
+
+## 集合 / set(2分検索木管理), multiset
+
+追加
+
+    set<int> aset;
+    aset.clear();
+    int tmp;
+    aset.insert(tmp);//追加済みは無視される
+    aset.erase(tmp);
+    aset.find("???");//見つからない時は、aset.end()に一致
+
+参照
+
+    set<int> aset;
+    for(auto x : st) {
+        cout << x << endl;;
+    }
+
+
+~~set<int>::iterator it;
+    it=aset.begin();
+    while(it != aset.end()) {
+      cout << *it << endl;;
+      it++;
+    }~~
+
+## vector
+
+    auto it=lower_bound(s.begin(),s.end(),tmp2);
+    s.insert(it, tmp2);
+
+    s.erase(s.begin()+K);
+
+## スタック
+
+    stack<int>st;
+
+## プライオリティーキュー
+
+順序が逆になるプライオリティキューを2個もつと
+固定されたちょうどk番目の値を効率よく保持できる
+k=5の例
+  PQa 1<3<5<6<7
+  PQb 21>15>12>11>9
+  この状態に4をPQaに入れる。入れた後のサイズが5以上になったら
+  topの値(7)をPQbに入れ、popする
+
+追加
+
+    priority_queue<int> pque;
+    pque.push(3);
+    pque.push(5);
+    pque.push(2);
+    int tmp=pque.top()//先頭要素
+    pque.pop();//大きい要素が取り除かれる
+
+定義
+
+    //構造体のキュー
+    struct P{int a;int b;int c;};
+    queue<P> que;
+    P p;
+    p.a=1;
+    p.b=2;
+    p.c=3;
+    que.push(p);
+    p=que.front();//現在のキューの先頭の要素の参照
+    que.pop();
+
+プライオリティの再定義
+
+    struct XX{
+      int a;
+      int b;
+    };
+    class xxGreater {
+      public:
+      bool operator()(const XX& riLeft, const XX& riRight) const {
+        //第2条件
+        if(riLeft.a == riRight.a){
+          return riLeft.b > riRight.b;//<:昇順(小さいものから順番)、>:降順(大きいものから順番)
+        }
+        //第1条件
+        return riLeft.a > riRight.a;
+      }
+    };
+    bool operator< (const XX &riLeft, const XX &riRight){
+      return riLeft.a < riRight.a;
+    };
+    bool operator> (const XX &riLeft, const XX &riRight){
+      return riLeft.a > riRight.a;
+    };
+    ---------------------------
+    //operator<, operator>でプライオリティが決定される
+    //top()で数値の大きい順に取得できる
+
+        priority_queue<XX> que;
+
+    //xxGreaterでプライオリティが決定される
+    //top()で数値の小さい順に取得できる
+
+        priority_queue<XX, vector<XX>, xxGreater> que;
+    ---------------------------
+        for(int i=0;i<N;i++){
+            int tmp;
+            cin >> tmp;
+            XX p;
+            p.a=tmp;
+            p.b=i;
+            que.push(p);
+        }
+
+        while(que.size()!=0){
+            cout << que.top().b+1 << endl;
+            que.pop();
+        }
+
+
+## サフィックス(トライ trie)
+アルゴリズムが難しいため、既存の実装を利用
+
+## グラフ(隣接リスト, 隣接行列)
+隣接リストの方が上
+
+    //隣接リスト
+    struct edge{
+      int to;
+      int cost;
+    };
+    ある頂点に対してつながっている頂点のコストを保持
+    vector<edge> G[vertex_num];
+
+    //隣接行列
+    iとjの間のコストを保持
+    int G[i][j];
+
+## kd木
+分離平面の取り方によって異なる
+
+    例)
+    セル内のオブジェクトの数が大体２つに別れる中間点をとおる縦軸を選ぶ
+    横軸で各セル内のオブジェクトの数が大体２つに別れる中間点をとおる横軸を選ぶ
+
+
+## その他
+
+順列
+
+    next_permutation

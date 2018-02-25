@@ -1,0 +1,139 @@
+## 包除原理
+
+    int m=16;
+    for(int i=0;i<(1<<m);i++){//2のm乗のループ、有る無しのループ
+      for(int j=0;j<m;j++){
+        if(i>>j & 1){//i番目のループのjbit目を調査
+          stringstream ss;
+          ss.clear();
+          ss.str("");
+          ss << static_cast<std::bitset<8>>(i);
+          cout << i << ":" << j << ":" << ss.str() << endl;
+        }
+      }
+    }
+
+## しゃくとり法
+
+数列a[0]〜a[N-1]において、総和がK以上となる連続するする部分列の内最小の長さ
+
+    int start=0;
+    int end=0;
+    int sum=0;
+    int ans=N+1;
+    for(;;){
+      while(end<N && sum<=K){
+        sum+=a[end++];
+      }
+      if(sum<K){
+        break;
+      }
+      ans = min(ans, end-start);
+      sum -= a[start++];
+    }
+
+
+## union-find(グループ分けを管理)
+
+    コンテストでは根が同じかどうかで集計することを使う
+
+        int ppar[100000]; //親
+        int rrank[100000];//木の深さ
+
+        void init(int n){
+          for(int i=1;i<=n;i++){
+            ppar[i]=i;
+            rrank[i]=0;
+          }
+        }
+
+        int find(int x){
+          if(ppar[x]==x){
+            return x;
+          }else{
+            return ppar[x]=find(ppar[x]);
+          }
+        }
+
+        void unite(int x,int y){
+          x=find(x);
+          y=find(y);
+          if(x==y){
+            return;
+          }
+          if(rrank[x]<rrank[y]){
+            ppar[x]=y;
+          }else{
+            ppar[y]=x;
+            if(rrank[x]==rrank[y]){
+              rrank[x]++;
+            }
+          }
+        }
+        bool same(int x,int y){
+          return find(x)==find(y);
+        }
+
+
+## セグメントツリー
+
+    int n,dat[2*1000000000];
+
+    void init(int n_){
+      n=1;
+      while(n<n_)n*=2;
+      for(int i=0;i<2*n-1;i++)dat[i]=INT_MAX_VALUE;
+    }
+
+    void update(int k,int a){
+      k+=n-1;
+      dat[k]=a;
+      while(k>0){
+        k=(k-1)/2;
+        dat[k]=min(dat[k*2+1],dat[k*2+2]);
+      }
+    }
+
+    int query(int a,int b,int k,int l,int r){
+      if(r<=a || b<=l)return INT_MAX_VALUE;
+      if(a<=l && r<=b)return dat[k];
+      else{
+        int vl=query(a,b,k*2+1,l,(l+r)/2);
+        int vr=query(a,b,k*2+2,(l+r)/2,r);
+        return min(vl,vr);
+      }
+    }
+
+和をもつセグメントツリー
+
+    int n,dat[2*10000000];
+
+    void init(int n_){
+      n=1;
+      while(n<n_)n*=2;
+      for(int i=0;i<2*n-1;i++)dat[i]=0;
+    }
+
+    void update(int k,int a){
+      k+=n-1;
+      dat[k]=a;
+      while(k>0){
+        k=(k-1)/2;
+        dat[k]=dat[k*2+1]+dat[k*2+2];
+      }
+    }
+
+    int query(int a,int b,int k,int l,int r){
+      if(r<=a || b<=l)return 0;
+      if(a<=l && r<=b)return dat[k];
+      else{
+        int vl=query(a,b,k*2+1,l,(l+r)/2);
+        int vr=query(a,b,k*2+2,(l+r)/2,r);
+        return vl+vr;
+      }
+    }
+
+    //使用方法
+    init(100000);
+    update(i,1);
+    int ans=query(l[j],r[j]+1,0,0,n);//[l[j],r[j]+1)の間を[0,n]区間で探す。nはinit()で計算すみ
