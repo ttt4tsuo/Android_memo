@@ -116,7 +116,7 @@ git push origin master:test
 ■fetch, pull, merge, rebase
 git pull
 fetch + mergeコマンドと動作、結果は同じです。
-
+git mergeブランチにアップデートを取り込み
 
 http://qiita.com/Yuki_312/items/b9af7d09559054ecabb5
 
