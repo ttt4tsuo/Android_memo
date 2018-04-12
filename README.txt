@@ -105,6 +105,8 @@ git branch master2 origin/master2
 
 git clone https://github.com/ttt4tsuo/Android_memo.git
 
+git ls-files --others --exclude-standard
+
 git branch issue1
 git checkout issue1
 git commit -a -m "text"
