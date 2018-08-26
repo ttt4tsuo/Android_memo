@@ -137,3 +137,24 @@
     init(100000);
     update(i,1);
     int ans=query(l[j],r[j]+1,0,0,n);//[l[j],r[j]+1)の間を[0,n]区間で探す。nはinit()で計算すみ
+
+bit
+
+    //bitは1以上の区間の和
+    //nn:和を持つ区間の最大値
+    //bitのサイズはnn+1
+    int bit[500000+2],nn=0;
+    int sum(int i){
+      int s=0;
+      while(i>0){
+        s+=bit[i];
+        i-=i&-i;
+      }
+      return s;
+    }
+    void add(int i,int x){
+      while(i<=nn){
+        bit[i]+=x;
+        i+=i&-i;
+      }
+    }

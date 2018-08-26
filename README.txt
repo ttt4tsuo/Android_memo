@@ -136,3 +136,4 @@ dialog.show();
 <activity android:theme="@android:style/Theme.Holo.Dialog" >
 これだけです。これで、アクティビティは全画面でなく、ダイアログ ウィンドウに表示されるようになります。
 
+find . -type f|xargs grep LLLL

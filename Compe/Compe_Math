@@ -83,16 +83,105 @@
 
 ## 繰り返し2乗法
 
-    long long mod_pow(long long x, long long n, long long mod){
+    ll mod_pow(ll x, ll n, ll mod){
       //xのn乗を計算するのにn乗を2進表記にして計算
       //x^22 = x^16 + x^4 + x^2
-      long long ret=1;
+      ll ret=1;
       while(n>0){
         if(n&1){
           ret=(ret*x)%mod;//答えに付加
         }
         x=(x*x)%mod;//2乗
         n >>=1;
-        }
-        return ret;
+      }
+      return ret;
     }
+
+## 繰り返し2乗法(行列)
+
+    typedef vector<double> vec;
+    typedef vector<vec> mat;
+    mat mul(mat &A, mat &B, ll mod){
+      mat C(A.size(),vec(B[0].size()));
+      for(int i=0;i<A.size();i++){
+        for(int j=0;j<B[0].size();j++){
+          for(int k=0;k<B.size();k++){
+            C[i][j]+=A[i][k]*B[k][j];
+            C[i][j]%=mod;
+          }
+        }
+      }
+      return C;
+    }
+
+    //n: 冪指数
+    mat pow(mat &A, ll n, ll mod){
+      //xのn乗を計算するのにn乗を2進表記にして計算
+      //x^22 = x^16 + x^4 + x^2
+      mat B(A.size(),vec(A.size()));
+      for(int i=0;i<A.size();i++){
+        B[i][i]=1;
+      }
+      while(n>0){
+        if(n&1){
+          B=mul(B,A,mod);//答えに付加
+        }
+        A=mul(A,A,mod);//2乗
+        n >>=1;
+      }
+      return B;
+    }
+
+    //使い方
+    mat A(R*C,vec(R*C));
+    mat res=mul(A,A,1);
+
+    //2行1列(縦ベクトル)
+    mat F(2,vec(1));
+
+    //2行2列の行列の逆行列
+    //detは逆元にして乗ずる
+    //modをとっているのでマイナス値がでると使えない
+    ll det=(A[0][0]*A[1][1])%1000000007+1000000007-(A[1][0]*A[0][1])%1000000007;
+    ll invdet=mod_pow(det,1000000005,1000000007);
+    mat invA(2,vec(2));
+    invA[0][0]=A[1][1];
+    invA[0][1]=1000000007-A[0][1];
+    invA[1][0]=1000000007-A[1][0];
+    invA[1][1]=A[0][0];
+
+    //回転
+    mat sum(3,vec(3));
+    for(int i=0;i<3;i++){
+        sum[i][i]=1;
+    }
+    mat kake(3,vec(3));
+    kake[0][1]=1;
+    kake[1][0]=-1;
+    kake[2][2]=1;
+    sum=mul(kake,sum,1);
+
+    //x座標に沿った平行移動
+    mat kake(3,vec(3));
+    for(int i=0;i<3;i++){
+        kake[i][i]=1;
+    }
+    kake[0][2]=x座標増加;
+    sum=mul(kake,sum,1);
+
+    //y座標に沿った水平移動
+    mat kake(3,vec(3));
+    for(int i=0;i<3;i++){
+        kake[i][i]=1;
+    }
+    kake[1][2]=y座標増加;
+    sum=mul(kake,sum,1);
+
+    //フィボナッチ数列
+    mat A(2,vec(2));
+    A[0][0]=1;
+    A[0][1]=1;
+    A[1][0]=1;
+    A[1][1]=0;
+    mat res=pow(A,N,1000000007);
+    ans=res[1][0];

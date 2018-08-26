@@ -3,7 +3,7 @@
 文字変換(intからstringへ)
 
     int i
-    v.s='A'+i;
+    str='A'+i;
 
 文字変換(stringからintへ)
 
@@ -29,6 +29,18 @@
         c[i].erase(c[i].begin()+k);
       }
     }
+
+より大きい・以上・以下・未満
+
+    より大きい個数
+    n-(int)(upper_bound(v, v + n, v[i])-v)
+    以上の個数
+    n-(int)(lower_bound(v, v + n, v[i]-v)
+
+    以下の個数
+    upper_bound(v, v + n, v[i])-v
+    未満の個数
+    lower_bound(v, v + n, v[i]-v
 
 stringからdoubleへ
 
@@ -116,6 +128,29 @@ K文字の全組みわわせ生成
       }
     }
 
+中間値
+
+    int tmp=(l+r)/2;
+    if(n>(tmp*(tmp+1))/2) l=tmp;
+    else r=tmp;
+
+    2分検索した時のlとrの値は、一致するか1個差
+
+    l=a
+    r=a+2
+    の時、(a+a+2)/2=a+1なので更新される
+
+    l=a
+    r=a+1
+    の時、(a+a+1)/2=aなのでrは更新されるがlは更新されない
+    -----
+    [l,r]
+    (r-l)+1が区間の格子点の個数
+    ((r-l)+1)が偶数のとき
+    	(l-1)+((r-l)+1)/2は、l寄りの中間格子点
+    ((r-l)+1)が奇数のとき
+    	(l-1)+((r-l)+1)/2+1が、ジャスト中間の格子点
+    -----
 
 マクロ
 
