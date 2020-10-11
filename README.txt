@@ -137,3 +137,32 @@ dialog.show();
 これだけです。これで、アクティビティは全画面でなく、ダイアログ ウィンドウに表示されるようになります。
 
 find . -type f|xargs grep LLLL
+
+
+
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.d("myapp","address:"+InetAddress.getByName("www.nttdocomo.co.jp").hostAddress)
+            Log.d("myapp","address:"+InetAddress.getByName("ocsp.globalsign.com").hostAddress)
+            Log.d("myapp","address:"+Inet6Address.getByName("www.nttdocomo.co.jp").hostAddress)
+            Log.d("myapp","address:"+Inet6Address.getByName("ocsp.globalsign.com").hostAddress)
+
+            try {
+                var url= URL("https","[2001:240:bb82:2300::1:d1]",443,"")
+                val urlCon = url.openConnection() as HttpURLConnection
+                urlCon.requestMethod = "GET"
+                urlCon.connect()
+                var msg=urlCon.responseMessage
+                Log.d("myapp", msg)
+            }catch (e:Exception){
+                Log.d("myapp", "exception");
+            }
+            try {
+                var url= URL("https","www.nttdocomo.co.jp",443,"")
+                val urlCon = url.openConnection() as HttpURLConnection
+                urlCon.requestMethod = "GET"
+                urlCon.connect()
+                var msg=urlCon.responseMessage
+                Log.d("myapp", msg)
+            }catch (e:Exception){
+                Log.d("myapp", "exception");
+            }
