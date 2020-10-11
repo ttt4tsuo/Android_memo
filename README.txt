@@ -147,22 +147,36 @@ find . -type f|xargs grep LLLL
             Log.d("myapp","address:"+Inet6Address.getByName("ocsp.globalsign.com").hostAddress)
 
             try {
-                var url= URL("https","[2001:240:bb82:2300::1:d1]",443,"")
+                var url= URL("http://[2606:4700::6812:15e2]/")
                 val urlCon = url.openConnection() as HttpURLConnection
                 urlCon.requestMethod = "GET"
                 urlCon.connect()
                 var msg=urlCon.responseMessage
                 Log.d("myapp", msg)
             }catch (e:Exception){
-                Log.d("myapp", "exception");
+                Log.d("myapp", "exception:"+e.message)
             }
             try {
-                var url= URL("https","www.nttdocomo.co.jp",443,"")
+                var url= URL("http://104.18.20.226/rootr3")
                 val urlCon = url.openConnection() as HttpURLConnection
                 urlCon.requestMethod = "GET"
                 urlCon.connect()
                 var msg=urlCon.responseMessage
                 Log.d("myapp", msg)
             }catch (e:Exception){
-                Log.d("myapp", "exception");
+                Log.d("myapp", "exception:"+e.message)
             }
+            try {
+                var url= URL("http://ocsp2.globalsign.com/rootr3")
+                val urlCon = url.openConnection() as HttpURLConnection
+                urlCon.requestMethod = "GET"
+                urlCon.connect()
+                var msg=urlCon.responseMessage
+                Log.d("myapp", msg)
+            }catch (e:Exception){
+                Log.d("myapp", "exception:"+e.message)
+            }
+            //<application
+            //android:usesCleartextTraffic="true"
+
+        }
